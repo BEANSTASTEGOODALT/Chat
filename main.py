@@ -15,7 +15,7 @@ def home():
 airesponse = ""
 
 def ai(prompt):
-    api_key = "sk*proj*1upZkvkZ0*heTGeveqQaWFJyzMcVLK3lB*ZJ2AsGqXVqZPz2cpwgFVKn*RU5gew12j_n8Tmcl9T3BlbkFJXxv4pkxjysRJEtbW4vq_1KFuQLwC8W10QL8C7Rbke1tKZe5ng*SMtILvcy8hdXqvryS4TjMrIA".replace("*", "-")
+    api_key = "sk*proj*QtJk3KZbZ2YiakncE0PaBxqY9H76UegxmCXGPPHBIhUX_vw8vH2sVD80Xmbzsw_q8I2xn3WH5kT3BlbkFJG1MvDhyoPxpAH_NksKjJXkw3pFfyuRH2wP_qgB1gZWepDO*dePgV3uJ2lBxolurOrUsybkmdoA".replace("*", "-")
 
     url = "https://api.openai.com/v1/responses"
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
