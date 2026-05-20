@@ -15,20 +15,34 @@ def home():
 airesponse = ""
 
 def ai(prompt):
-    api_key = "sk*proj*QtJk3KZbZ2YiakncE0PaBxqY9H76UegxmCXGPPHBIhUX_vw8vH2sVD80Xmbzsw_q8I2xn3WH5kT3BlbkFJG1MvDhyoPxpAH_NksKjJXkw3pFfyuRH2wP_qgB1gZWepDO*dePgV3uJ2lBxolurOrUsybkmdoA".replace("*", "-")
+    api_key = "AIzaSyAaqgZ2WbCMpwr1sUc8UKtvoZRKaBwVXqM"
 
-    url = "https://api.openai.com/v1/responses"
-    headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
-    data = {"model": "gpt-4o-mini", "input": prompt}
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={api_key}"
+
+    headers = {
+        "Content-Type": "application/json"
+    }
+
+    data = {
+        "contents": [
+            {
+                "parts": [
+                    {
+                        "text": f"You are ChatGPT. Respond like ChatGPT.\n\nUser: {prompt}"
+                    }
+                ]
+            }
+        ]
+    }
 
     try:
         response = requests.post(url, headers=headers, data=json.dumps(data))
         response.raise_for_status()
+
         airesponse = (
-            response.json().get("output", [{}])[0]
-                .get("content", [{}])[0]
-                .get("text")
+            response.json()["candidates"][0]["content"]["parts"][0]["text"]
         )
+
         return airesponse or "..."
     except Exception as e:
         print(f"AI error: {e}")
@@ -79,8 +93,10 @@ def run_scratch():
                 if var.name == "☁ CHAT_INPUT":
                     decoded = decode(var.value)
                     print("Got:", decoded)
+
                     aires = ai(decoded)
                     print("AI:", aires)
+
                     try:
                         conn.set_cloud_variable("☁ CHAT_OUTPUT", encode(aires))
                     except Exception as e:
